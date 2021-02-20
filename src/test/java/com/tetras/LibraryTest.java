@@ -9,7 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class LibraryTest {
     @Test
     void testSomeLibraryMethod() {
-        Library classUnderTest = new Library();
-        assertTrue(classUnderTest.someLibraryMethod(), "someLibraryMethod should return 'true'");
+        RequeteHttp maRequete = new RequeteHttp();
+        maRequete.getUrl().path = "https://monapi.com/users";
+        assertTrue(ServeurWeb.repondre(maRequete) == 200, "requête success");
+        maRequete.getUrl().path = "https://monapi.com/evilurl";
+        assertTrue(ServeurWeb.repondre(maRequete) == 403, "requête error");
+        maRequete.getUrl().path = null;
+        assertTrue(ServeurWeb.repondre(maRequete) == 500, "requête error");
+        assertTrue(maRequete.afficher());
     }
 }
